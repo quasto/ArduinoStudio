@@ -21,7 +21,8 @@
  *
  * Copyright 2015 Arduino Srl (http://www.arduino.org/)
  *
- * authors: arduino.org team - support@arduino.org
+ * created:            Sep 2015 marcello@arduino.org
+ * edited:          15 Oct 2015 sergio@arduino.org
  *
  */
 define(function (require, exports, module) {
@@ -29,15 +30,22 @@ define(function (require, exports, module) {
 
     //Arduino Stuffs
     require("arduino/Console");
-    require("arduino/ConsoleView");
+    require("arduino/SerialMonitor");
     require("arduino/SerialPort");
     require("arduino/Discovery");
     require("text!htmlContent/console-panel.html");
+    require("text!htmlContent/serialmonitor-panel.html");
 
     var AppInit = require("utils/AppInit"),
         CommandManager = require("command/CommandManager"),
-        Commands = require("command/Commands");
-        //PreferencesManager = require("preferences/PreferencesManager");
+        Commands = require("command/Commands"),
+        PreferencesManager  = require("preferences/PreferencesManager");
+
+
+    PreferencesManager.definePreference("arduino.target.board", "string", "uno");
+    //TODO default must be undefined, becouse it will be specified by the user at first uploading
+    //PreferencesManager.definePreference("arduino.target.port", "string", undefined);
+    PreferencesManager.definePreference("arduino.target.port", "string", "/dev/tty.usbmodem1411");
 	
     AppInit.appReady(function () {
         $('.toolbar-btn').click(function(evt){
@@ -74,10 +82,10 @@ define(function (require, exports, module) {
             case 'toolbar-save-btn':
                 CommandManager.execute(Commands.FILE_SAVE);
                 break;
-            case 'toolbar-serial-btn':
-                Dispatcher.trigger('arduino-event-serialmonitor');
-                break;
-            */
+             */
+        case 'toolbar-serial-btn':
+            CommandManager.execute(Commands.TOOGLE_SERIALMONITOR);
+            break;
         case 'toolbar-console-btn':
             CommandManager.execute(Commands.TOOLS_CONSOLE_TOOGLE);
             break;

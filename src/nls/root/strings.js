@@ -423,9 +423,14 @@ define({
     "CMD_OPEN_PREFERENCES"                : "Open Preferences File",
     "CMD_OPEN_KEYMAP"                     : "Open User Key Map",
 
-    //Tools menu commands
+    // Tools menu commands
     "TOOLS_MENU"                            : "Tools",
     "CMD_CONSOLE"                           : "Console",
+    "CMD_SERIALMONITOR"                     : "Serial Monitor",
+
+    // Extra
+    "CMD_SERIALMONITOR_START"               : "Serial Monitor Start",
+    "CMD_SERIALMONITOR_STOP"                : "Serial Monitor Stop",
 
     // Strings for main-view.html
     "EXPERIMENTAL_BUILD"                   : "experimental build",
@@ -653,5 +658,25 @@ define({
     "COLLAPSE_ALL"                  : "Collapse All",
     "EXPAND_ALL"                    : "Expand All",
     "COLLAPSE_CURRENT"              : "Collapse Current",
-    "EXPAND_CURRENT"                : "Expand Current"
+    "EXPAND_CURRENT"                : "Expand Current",
+
+    // arduino Serial Monitor
+    "ARDUINO_SERIALMONITOR_AUTOSCROLL"   : "Autoscroll",
+    "ARDUINO_SERIALMONITOR_BAUD_RATE"    : "Baud Rate",
+    "ARDUINO_SERIALMONITOR_EOL"       : "End Of Line",
+    "ARDUINO_SERIALMONITOR_EOL_NA"       : "No line ending",
+    "ARDUINO_SERIALMONITOR_EOL_NL"       : "New line",
+    "ARDUINO_SERIALMONITOR_EOL_CR"       : "Carriage Return",
+    "ARDUINO_SERIALMONITOR_EOL_BOTH"     : "Both NL & CR",
+    "ARDUINO_SERIALMONITOR_EOL_NA_KEY"       : "NA",
+    "ARDUINO_SERIALMONITOR_EOL_NL_KEY"       : "NL",
+    "ARDUINO_SERIALMONITOR_EOL_CR_KEY"       : "CR",
+    "ARDUINO_SERIALMONITOR_EOL_BOTH_KEY"     : "BOTH",
+    "ARDUINO_SERIALMONITOR_MESSAGE"     : "Message",
+    "ARDUINO_SERIALMONITOR_LOG"      : "Log",
+    "ARDUINO_SERIALMONITOR_SELECT_BR"   : "Select Baud Rate",
+    "ARDUINO_SERIALMONITOR_SELECT_EOL"  : "Select End Of Line character",
+    "ARDUINO_SERIALMONITOR_TLT_SEND"    : "Send message",
+    "ARDUINO_SERIALMONITOR_TLT_CLEAR"    : "Clear"
+
 });

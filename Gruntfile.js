@@ -63,7 +63,8 @@ module.exports = function (grunt) {
                             'LiveDevelopment/MultiBrowserImpl/transports/**',
                             'LiveDevelopment/MultiBrowserImpl/launchers/**',
                             'arduino/node/**',
-                            'arduino/ConsoleView.js'
+                            'arduino/ConsoleView.js',
+                            'arduino/SerialMonitorModule.js'
                         ]
                     },
                     /* node domains are not minified and must be copied to dist */
@@ -147,7 +148,7 @@ module.exports = function (grunt) {
                     optimize: 'uglify2',
                     // brackets.js should not be loaded until after polyfills defined in "utils/Compatibility"
                     // so explicitly include it in main.js
-                    include: ["utils/Compatibility", "brackets"],
+                    include: ["utils/Compatibility", "brackets", "arduino"],
                     // TODO: Figure out how to make sourcemaps work with grunt-usemin
                     // https://github.com/yeoman/grunt-usemin/issues/30
                     generateSourceMaps: true,

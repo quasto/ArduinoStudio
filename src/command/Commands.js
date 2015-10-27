@@ -171,7 +171,12 @@ define(function (require, exports, module) {
     exports.FILE_ADD_TO_WORKING_SET     = "file.addToWorkingSet";       // Deprecated through DocumentCommandHandlers.js handleFileAddToWorkingSet
 
     // TOOLS
-    exports.TOOLS_CONSOLE_TOOGLE          = "tools.consoleToogle";       // Console.js       toggle();
+    exports.TOOLS_CONSOLE_TOOGLE        = "tools.consoleToggle";       // Console.js       toggle();
+    exports.TOOGLE_SERIALMONITOR        = "tools.toggleSerialMonitor"; // SerialMonitor.js toggle();
+
+    // EXTRA
+    exports.CMD_SERIALMONITOR_START  = "cmd.serialMonitorStart"; // SerialMonitor.js startMonitoring();
+    exports.CMD_SERIALMONITOR_STOP   = "cmd.serialMonitorStop"; // SerialMonitor.js stopMonitoring();
     
     // DEPRECATED: Working Set Commands
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_BY_ADDED",   "CMD_WORKINGSET_SORT_BY_ADDED");
