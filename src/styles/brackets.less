@@ -2202,3 +2202,90 @@ div#bTag, div#pTag {
 .modal-bar {
     padding-left: 0px;
 }
+
+/* SERIAL MONITOR STYLE */
+#serialmonitor {
+    min-height: 380px;
+    height: 99%;
+    max-height: 380px;
+    padding-top: 0px;
+    display: block;
+    border: 9px solid #f27a20;
+    padding-left: 0px;
+    background-color: #ffffff;
+    padding-left: 16px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+input#scroll {
+    width: 13px;
+}
+
+#options {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#message_input{
+    width: 86%;
+    margin-left: 15px;
+    border: 1px solid #b2b5b5;
+}
+
+#console_log {
+    width: 96%;
+    min-height: 220px;
+    max-height: 220px;
+    overflow-y: scroll !important;
+    margin-left:15px;
+    background-color: #ffffff;
+    padding-top: 0px;
+    border: 1px solid #b2b5b5;
+
+    -moz-user-select: text;
+    -khtml-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.serial_title {
+    font-weight: bold;
+}
+
+.serial_label {
+    margin-left:15px;
+}
+
+.serial_label, .serial_title {
+    color: #17a0a4;
+}
+
+a#send_button {
+    background: url(images/arduino/send.png) center 50% no-repeat;
+    cursor:pointer;
+    width: 35px;
+    height: 35px;
+    padding: 0px;
+}
+a#send_button:hover {
+    background: url(images/arduino/send_over.png) center no-repeat;
+}
+
+a#clear_button {
+    background: url(images/arduino/clear.png) center no-repeat;
+    cursor:pointer;
+    width: 35px;
+    height: 35px;
+    padding: 0px;
+    margin-left: 5px;
+}
+a#clear_button:hover {
+    background: url(images/arduino/clear_over.png) center no-repeat;
+}
+
+
+.oneBlock, .form-inline{
+    float: left;
+}

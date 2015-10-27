@@ -1,0 +1,52 @@
+<div id="serialmonitor" class="modal-bar">
+    <div id="options">
+        <div class="form-inline text-center">
+
+            <div class="oneBlock">
+                <label class="serial_label">{{ARDUINO_SERIALMONITOR_AUTOSCROLL}}</label>
+                <input type="checkbox" id="scroll" checked=true />&nbsp;&nbsp;|&nbsp;&nbsp;
+            </div>
+            <div class="oneBlock">
+                <label class="serial_label">{{ARDUINO_SERIALMONITOR_BAUD_RATE}}</label>
+                <select id="baud" class="selectpicker">
+                    <option value="" disabled selected>{{ARDUINO_SERIALMONITOR_SELECT_BR}}</option>
+                    <option value="300">300</option>
+                    <option value="1200">1200</option>
+                    <option value="2400">2400</option>
+                    <option value="4800">4800</option>
+                    <option value="9600">9600</option>
+                    <option value="14400">14400</option>
+                    <option value="19200">19200</option>
+                    <option value="28800">28800</option>
+                    <option value="38400">38400</option>
+                    <option value="57600">57600</option>
+                    <option value="115200">115200</option>
+                </select>&nbsp;&nbsp;|&nbsp;&nbsp;
+            </div>
+            <div class="oneBlock">
+                <label class="serial_label">{{ARDUINO_SERIALMONITOR_EOL}}</label>
+                <select id="eol">
+                    <option value="" disabled selected>{{ARDUINO_SERIALMONITOR_SELECT_EOL}}</option>
+                    <option value="{{ARDUINO_SERIALMONITOR_EOL_NA_KEY}}">{{ARDUINO_SERIALMONITOR_EOL_NA}}</option>
+                    <option value="{{ARDUINO_SERIALMONITOR_EOL_NL_KEY}}">{{ARDUINO_SERIALMONITOR_EOL_NL}}</option>
+                    <option value="{{ARDUINO_SERIALMONITOR_EOL_CR}}">{{ARDUINO_SERIALMONITOR_EOL_CR}}</option>
+                    <option value="{{ARDUINO_SERIALMONITOR_EOL_BOTH}}">{{ARDUINO_SERIALMONITOR_EOL_BOTH}}</option>
+                </select>
+            </div>
+            <label id="test">
+                KO
+            </label>
+        </div>
+    </div>
+
+    <div id="send" class="form-inline oneBlock" style="width: 100%;">
+        <label class="serial_label">{{ARDUINO_SERIALMONITOR_MESSAGE}}</label><br />
+        <input type="text" id="message_input" /><a class="btn" id="send_button" title="{{ARDUINO_SERIALMONITOR_TLT_SEND}}" /><a id="clear_button" class="btn" title="{{ARDUINO_SERIALMONITOR_TLT_CLEAR}}" />
+        <!--<input type="button" id="send_button" value="Send">-->
+    </div>
+
+    <div class="form-inline" style="width: 100%; ">
+        <label class="serial_label">{{ARDUINO_SERIALMONITOR_LOG}}</label>
+        <div id="console_log"></div>
+    </div>
+</div>
