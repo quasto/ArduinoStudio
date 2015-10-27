@@ -34,3 +34,7 @@ Thumbs.db
 
 # Files that can be automatically downloaded that we don't want to ship with our builds
 /src/extensibility/node/node_modules/request/tests/
+
+# arduino node module
+/src/arduino/node/node_modules
+/src/arduino/node/npm-debug.log
