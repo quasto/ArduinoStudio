@@ -42,11 +42,12 @@
             baudRate: rate
         };
 
-        if(!serialPorts[port] || serialPorts[port] === undefined ){
+        if(!serialPorts[port] || serialPorts[port] === undefined ){console.log("nuova");
             //TODO: check in list if port passed exists, if not exists do not push sp into SerialPorts Array. Use serialport functions to list serial ports.
             //Serial.list(function (err, ports) {
             //    ports.forEach(function(port) {
                     //if( port.comName == args.port ) {
+            //TODO: check also if the request to the same port has a different baudrate
             serialPorts[port] = new Serial.SerialPort(port, opts, false);
                     //}
                 //});
@@ -59,13 +60,19 @@
             if (!serialPorts[port].isOpen()) {
                 serialPorts[port].open(function (error) {
                     if (error) {
-                        callback(error);
+                        callback(error.toString());
                     }
                     else {
                         serialPorts[port].on('data', function (data) {
                             dManager.emitEvent(domainName, "data", [port, data]);
                             serialPorts[port].flush(function (err, results) {
                             });
+                        });
+                        serialPorts[port].on('error', function (error) {
+                            dManager.emitEvent(domainName, "error", [port, error]);
+                        });
+                        serialPorts[port].on('close', function () {
+                            dManager.emitEvent(domainName, "close", [port]);
                         });
                         callback(null, true/*SerialPorts[port].path + " opened."*/);
                     }
@@ -84,7 +91,7 @@
         if (!!serialPorts[port]) {
             serialPorts[port].close(function (error) {
                 if (error) {
-                    callback(error);
+                    callback(error.toString());
                 }
                 else {
                     callback(null, true/*SerialPorts[port].path + " closed."*/);
@@ -101,7 +108,7 @@
             if (serialPorts[port].isOpen()) {
                 serialPorts[port].write(buffer, function (error) {
                     if (error) {
-                        callback(error);
+                        callback(error.toString());
                     }
                     else {
                         serialPorts[port].drain(callback(null, true));
@@ -238,6 +245,32 @@
             },{	name:"data",
                 type:"string",
                 description:"Data from board serial port"
+            }]
+        );
+
+        /**
+         * Event Error: this event is used to bring back to AS, errors from the serial port
+         */
+        dManager.registerEvent(
+            domainName,
+            "error",
+            [{	name:"port",
+                type:"string",
+                description:"Number of port"
+            },{	name:"error",
+                type:"string",
+                description:"Errors from board serial port"
+            }]
+        );
+        /**
+         * Event Close: this event is used to bring back to AS, when the serial connection is closed, or board is disconnect
+         */
+        dManager.registerEvent(
+            domainName,
+            "close",
+            [{	name:"port",
+                type:"string",
+                description:"Number of port"
             }]
         );
     }

@@ -39,11 +39,24 @@ define(function (require, exports, module) {
     var domainPath = FileUtils.getNativeBracketsDirectoryPath() + "/" + FileUtils.getNativeModuleDirectoryPath(module) + "/node/SerialDomain";
     var serialDomain      = new NodeDomain("arduino-serial-domain", domainPath);
 
-    //var EOL = {
-    //    NL:     "\n",
-    //    CR:     "\r",
-    //    BOTH:   "\r\n"
-    //};
+    /**
+     * NOTE: when create a serial port object, open it and attach listener to receive data from serial connection, and then create a second serial port object
+     * to the same serial path (COM1, or /dev/tty.usbmodem1421) and attach a listener, this last listener will not receives any data from serial connection,
+     * you need to call the open methods on the second serial port object, to receive data:
+     *
+     * var serialport = require("arduino/SerialPort").SerialPort;
+     * var sp = new serialport("/dev/tty.usbmodem1421",9600);
+     *
+     * sp.open().done(function(status){console.log(status);}).fail(function(status){console.log(status);});
+     * sp.on("data",function($evt, data){console.log("@SP:" + data);});
+     *
+     * var sp2 = new serialport("/dev/tty.usbmodem1421",9600);
+     * sp2.open().done(function(status){console.log(status);}).fail(function(status){console.log(status);}); // this is necessary also if the port is already opened
+     * sp2.on("data",function($evt, data){console.log("@SP2:" + data);});
+     *
+     *
+     */
+
 
     /**
      * @constructor
@@ -56,26 +69,36 @@ define(function (require, exports, module) {
         this.address = address;
         this.baudRate = baudRate || 9600;
 
-        var that = this;
         //TODO manage the promise callback - done and fail
         serialDomain.exec("create", this.address, parseInt(this.baudRate, 10));
 
-        this._handleSerialData = function($evt, port, data){
-            if(that.address.localeCompare(port) === 0 ) {
-                that.trigger("data", data);
-            }
-        };
-
-        serialDomain.on('data', this._handleSerialData);
-
-        //function _handleSerialData($evt, port, data){
-        //    if(that.address.localeCompare(port) == 0 ) {
-        //        that.trigger("data", data);
-        //    }
-        //}
     }
 
     EventDispatcher.makeEventDispatcher(SerialPort.prototype);
+
+    //function _attachHandlers(ref){
+    //    var _handleSerialData = function($evt, port, data){
+    //        if(ref.address.localeCompare(port) === 0 ) {
+    //            ref.trigger("data", data);
+    //        }
+    //    };
+    //
+    //    var _handleSerialClose = function($evt, port){
+    //        if(ref.address.localeCompare(port) === 0 ) {
+    //            ref.trigger("close");
+    //        }
+    //    };
+    //
+    //    var _handleSerialError = function($evt, port, error){
+    //        if(ref.address.localeCompare(port) === 0 ) {
+    //            ref.trigger("error", error.toString());
+    //        }
+    //    };
+    //
+    //    serialDomain.on('data', _handleSerialData);
+    //    serialDomain.on('close', _handleSerialClose);
+    //    serialDomain.on('error', _handleSerialError);
+    //}
 
     /**
      * Opens the connection to serial port, only if connection is not already opened
@@ -85,25 +108,39 @@ define(function (require, exports, module) {
     SerialPort.prototype.open = function(){
         var $deferred = $.Deferred(),
             that = this;
+        serialDomain.exec("open", that.address)
+        .done( function(result){
+            //_attachHandlers(that);
 
-        serialDomain.exec("isOpen", that.address)
-            .done( function(status){
-                if(status){
-                    $deferred.resolve(status);
+            function _handleSerialData($evt, port, data) {
+                if (that.address.localeCompare(port) === 0) {
+                    that.trigger("data", data);
                 }
-                else{
-                    serialDomain.exec("open", that.address)
-                        .done( function(result){
-                            $deferred.resolve(true);
-                        })
-                        .fail(function(error) {
-                            $deferred.reject(error);
-                        });
+            }
+
+            function _handleSerialClose($evt, port) {
+                if (that.address.localeCompare(port) === 0) {
+                    that.trigger("close");
                 }
-            })
-            .fail(function(error) {
-                $deferred.reject(error);
-            });
+            }
+
+            function _handleSerialError($evt, port, error) {
+                if (that.address.localeCompare(port) === 0) {
+                    that.trigger("error", error.toString());
+                }
+            }
+
+            if( !serialDomain._eventHandlers || ( !serialDomain._eventHandlers.close || !serialDomain._eventHandlers.data || !serialDomain._eventHandlers.error) ) {
+                serialDomain.on('data', _handleSerialData);
+                serialDomain.on('close', _handleSerialClose);
+                serialDomain.on('error', _handleSerialError);
+            }
+
+            $deferred.resolve(result);
+        })
+        .fail(function(error) {
+            $deferred.reject(error);
+        });
 
         return $deferred.promise();
     };
@@ -124,6 +161,8 @@ define(function (require, exports, module) {
             });
 
         serialDomain.off("data");       //remove listener between this and node domain
+        serialDomain.off("close");
+        serialDomain.off("error");
         this.off("data");               //remove listeners between this and user space
         return $deferred.promise();
     };
