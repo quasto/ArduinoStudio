@@ -255,11 +255,14 @@ define(function (require, exports, module) {
     }
 
     function _reconnect(){
-        _timer = window.setInterval(function () {
-            if( !!_prefs.get("show") && !!_prefs.get("autostart") ) {
-                startMonitor();
-            }
-        }, 5000);
+
+        startMonitor().fail(function(error){
+            _timer = window.setInterval(function () {
+                if( !!_prefs.get("show") && !!_prefs.get("autostart") ) {
+                    startMonitor();
+                }
+            }, 5000);
+        });
     }
 
     /**

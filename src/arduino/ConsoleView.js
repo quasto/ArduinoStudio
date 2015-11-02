@@ -36,9 +36,7 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var //EventDispatcher       = require("utils/EventDispatcher"),
-        WorkspaceManager      = require("view/WorkspaceManager"),
-        PreferencesManager    = require("preferences/PreferencesManager"),
+    var WorkspaceManager      = require("view/WorkspaceManager"),
         Console               = require("arduino/Console"),
 
         _consolePanelTemplate  = require("text!htmlContent/console-panel.html");

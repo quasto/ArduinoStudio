@@ -21,8 +21,8 @@
  *
  * Copyright 2015 Arduino Srl (http://www.arduino.org/) support@arduino.org
  *
- * authors:     sergio@arduino.org
- * date:        04 Sep 2015
+ * created:             04 Sep 2015 sergio@arduino.org
+ * edited:              14 Oct 2015 sergio@arduino.org
  */
 
 
@@ -42,8 +42,8 @@ define(function (require, exports, module) {
         Commands            = require("command/Commands"),
         CommandManager      = require("command/CommandManager"),
         Strings             = require("strings"),
-        FileSystem          = require("filesystem/FileSystem"),
-        FileUtils           = require("file/FileUtils");
+        FileUtils           = require("file/FileUtils"),
+        ModuleManager       = require("arduino/ModuleManager");
 
 
     // make sure the global brackets variable is loaded
@@ -64,7 +64,7 @@ define(function (require, exports, module) {
             INFO:       "logType.Info",
             SUCCESS:     "logType.Success",
             WARNING:    "logType.Warning"
-    };
+        };
 
     /**
      * @type {PrefixedPreferencesSystem} _prefs
@@ -192,112 +192,10 @@ define(function (require, exports, module) {
         }
     }
 
-    /**
-     * Load Console Module and return a promise
-     * @param {String} moduleName The module name used to get the module and load it.
-     * @returns {JQuery.Promise} the promise resolves if the module is loaded and fails if there's errors
-     */
-    function loadModule(moduleName){
-        var $deferred = new $.Deferred();
-        var moduleFilePath = _prefs.get("module." + moduleName),
-            moduleDefaultFilePath = _prefs.get("module.default");
-        if(moduleFilePath !== undefined) {
-
-            //TODO: se carico un modulo, che é gia caricato, non caricarlo.
-
-            var file = FileSystem.getFileForPath(moduleFilePath);
-            file.exists(function (err, status) {
-                if (status) {
-                    _load(moduleFilePath, function(error){
-                        if(error){
-                            $deferred.fail(error);
-                        }
-                        else{
-                            $deferred.resolve();
-                        }
-                    });
-                }
-                else {
-                    _load(moduleDefaultFilePath, function(error){
-                        if(error){
-                            $deferred.fail(error);
-                        }
-                        else{
-                            $deferred.resolve();
-                        }
-                    });
-                }
-            });
-        }
-        else{
-            _load(moduleDefaultFilePath, function(error){
-                if(error){
-                    $deferred.fail(error);
-                }
-                else{
-                    $deferred.resolve();
-                }
-            });
-        }
-
-        return $deferred.promise();
-    }
-
-    //TODO: implementare un meccanismo che permetta di capire se il modulo rispetta le interfacce.
-    //TODO: implementare un meccanismo che permetta la registrazione di altri moduli, che vengono caricati come estensione
-    //TODO: quando si fa il load e l'unload del modulo, si dovrebbe prevedere che venga fatto dentro la cornice,
-    // e non rimuovere tutto, ma solo quello contenuto dentro.
-
-    //function registerModule(moduleName, modulePath){
-    //
-    //}
-
-    /**
-     * Loads the specified module
-     * @param {String} modulePath the path to javascript module
-     * @param {Function} callback - call backs only errors
-     * @private
-     */
-    function _load(modulePath, callback){
-        _unload(function(error){
-            if(!error) {
-                require([modulePath], function (res) {
-                    _consoleView = res;
-                    _consoleView.init("");
-                    if( !!_prefs.get("show") ) {
-                        show();
-                    }
-                    else {
-                        hide();
-                    }
-                    callback(null);
-                });
-            }
-            else{
-                callback(error)
-            }
-        });
-    }
-
-    /**
-     * Unloads the current module
-     * @private
-     */
-    function _unload(callback){
-        try {
-            if (_consoleView) {
-                _consoleView.dispose();
-                _consoleView = null;
-            }
-            callback(null);
-        }
-        catch(error){
-            callback(error);
-        }
-    }
-
     AppInit.htmlReady(function () {
-        loadModule("default").done(function(){
+        ModuleManager.loadModule("arduino.panel.console","default")
+        .done(function(module){
+            _consoleView = module;
             if( !!_prefs.get("show") ) {
                 show();
             }
@@ -322,7 +220,7 @@ define(function (require, exports, module) {
     exports.logError = logError;
     exports.logSuccess = logSuccess;
     exports.logWarning = logWarning;
-    exports.loadModule = loadModule;
+    //exports.loadModule = loadModule;
     //exports.registerModule = registerModule;
     exports.LOG_TYPE = LOG_TYPE;
 });
