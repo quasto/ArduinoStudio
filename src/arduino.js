@@ -87,7 +87,7 @@ define(function (require, exports, module) {
             CommandManager.execute(Commands.TOOGLE_SERIALMONITOR);
             break;
         case 'toolbar-console-btn':
-            CommandManager.execute(Commands.TOOLS_CONSOLE_TOOGLE);
+            CommandManager.execute(Commands.TOOGLE_CONSOLE);
             break;
         case 'toolbar-toggle-btn':
             if($('#sidebar').is(':visible')){

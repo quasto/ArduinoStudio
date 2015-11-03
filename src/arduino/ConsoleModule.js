@@ -38,16 +38,18 @@ define(function (require, exports, module) {
 
     var WorkspaceManager      = require("view/WorkspaceManager"),
         Console               = require("arduino/Console"),
+        Strings               = require("strings"),
 
         _consolePanelTemplate  = require("text!htmlContent/console-panel.html");
 
-    var  _panelHtml, _panel, _$panel, _$logger;
+    var  _panelHtml, _panel, _$panel, _$logger, _row = 0, _maxRow = 100;
 
     function init(panelName) {
-        _panelHtml  = Mustache.render(_consolePanelTemplate, {});
+        _panelHtml  = Mustache.render(_consolePanelTemplate, Strings);
         _panel      = WorkspaceManager.createBottomPanel(panelName, $(_panelHtml));
         _$panel     = _panel.$panel;
         _$logger    = _$panel.find("#logger");
+        _maxRow     = Console.getMaxRow();
     }
 
     /**
@@ -108,6 +110,7 @@ define(function (require, exports, module) {
     function clear() {
         if (_panel && _$logger) {
             _$logger.empty();
+            _row = 0;
         }
     }
 
@@ -151,15 +154,24 @@ define(function (require, exports, module) {
      */
     function log(msg) {
         if (_panel && _$logger && msg) {
+            if(_row > _maxRow){
+                _row--;
+                _$logger.find("p")[0].remove();
+            }
+            _row++;
+
             switch (msg.type){
             case Console.LOG_TYPE.INFO:
-                _$logger.append("[" + msg.timestamp + "] - <span style='color: black;'>" + msg.message + "</span><br />");
+                _$logger.append("<p>[" + msg.timestamp + "][Info] - <span style='color: black;'>" + msg.message + "</span></p>");
                 break;
             case Console.LOG_TYPE.ERROR:
-                _$logger.append("[" + msg.timestamp + "] - <span style='color: darkred;'>" + msg.message + "</span><br />");
+                _$logger.append("<p>[" + msg.timestamp + "][Error] - <span style='color: darkred;'>" + msg.message + "</span></p>");
                 break;
             case Console.LOG_TYPE.SUCCESS:
-                _$logger.append("[" + msg.timestamp + "] - <span style='color: darkgreen;'>" + msg.message + "</span><br />");
+                _$logger.append("<p>[" + msg.timestamp + "][Success] - <span style='color: darkgreen;'>" + msg.message + "</span></p>");
+                break;
+            case Console.LOG_TYPE.WARNING:
+                _$logger.append("<p>[" + msg.timestamp + "][Warning] - <span style='color: darkorange;'>" + msg.message + "</span></p>");
                 break;
             }
         }

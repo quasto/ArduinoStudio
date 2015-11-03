@@ -63,7 +63,7 @@ module.exports = function (grunt) {
                             'LiveDevelopment/MultiBrowserImpl/transports/**',
                             'LiveDevelopment/MultiBrowserImpl/launchers/**',
                             'arduino/node/**',
-                            'arduino/ConsoleView.js',
+                            'arduino/ConsoleModule.js',
                             'arduino/SerialMonitorModule.js'
                         ]
                     },

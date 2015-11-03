@@ -171,7 +171,7 @@ define(function (require, exports, module) {
     exports.FILE_ADD_TO_WORKING_SET     = "file.addToWorkingSet";       // Deprecated through DocumentCommandHandlers.js handleFileAddToWorkingSet
 
     // TOOLS
-    exports.TOOLS_CONSOLE_TOOGLE        = "tools.consoleToggle";       // Console.js       toggle();
+    exports.TOOGLE_CONSOLE              = "tools.toggleConsole";       // Console.js       toggle();
     exports.TOOGLE_SERIALMONITOR        = "tools.toggleSerialMonitor"; // SerialMonitor.js toggle();
 
     // EXTRA

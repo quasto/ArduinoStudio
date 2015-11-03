@@ -49,11 +49,13 @@ define(function (require, exports, module) {
     // make sure the global brackets variable is loaded
     // require("utils/Global");
 
+    var _prefsPrefix = "arduino.panel.console";
+
     /**
      * @type {string} _consoleDefaultModule is the path of the default Console Module
      * @private
      */
-    var _consoleDefaultModule = FileUtils.getNativeBracketsDirectoryPath() + "/" + FileUtils.getNativeModuleDirectoryPath(module) + "/ConsoleView.js";
+    var _consoleDefaultModule = FileUtils.getNativeBracketsDirectoryPath() + "/" + FileUtils.getNativeModuleDirectoryPath(module) + "/ConsoleModule.js";
 
     /**
      *
@@ -62,7 +64,7 @@ define(function (require, exports, module) {
     var LOG_TYPE = {
             ERROR:      "logType.Error",
             INFO:       "logType.Info",
-            SUCCESS:     "logType.Success",
+            SUCCESS:    "logType.Success",
             WARNING:    "logType.Warning"
         };
 
@@ -70,13 +72,15 @@ define(function (require, exports, module) {
      * @type {PrefixedPreferencesSystem} _prefs
      * @private
      */
-    var _prefs = PreferencesManager.getExtensionPrefs("arduino.panel.console");
+    var _prefs = PreferencesManager.getExtensionPrefs(_prefsPrefix);
 
     /** @type {ConsoleView} The console view. Initialized in htmlReady() */
     var _consoleView = null;
 
-    PreferencesManager.definePreference("arduino.panel.console.show", "boolean", true);
-    PreferencesManager.definePreference("arduino.panel.console.module.default", "string", _consoleDefaultModule);
+    PreferencesManager.definePreference(_prefsPrefix + ".show", "boolean", true);
+    PreferencesManager.definePreference(_prefsPrefix + ".module.default", "string", _consoleDefaultModule);
+
+    PreferencesManager.definePreference(_prefsPrefix + ".maxrow", "number", 500);
 
     EventDispatcher.makeEventDispatcher(exports);
 
@@ -192,8 +196,27 @@ define(function (require, exports, module) {
         }
     }
 
+    /**
+     * Sets the max number of row to print, into preferences
+     * @param status {number} number of rows.
+     */
+    function setMaxRow(rows){
+        if(!!rows) {
+            _prefs.set("maxrow", rows);
+        }
+
+    }
+
+    /**
+     * Gets the current max number of rows to print into the logger, from preferences
+     */
+    function getMaxRow(){
+        return _prefs.get("maxrow");
+    }
+
+
     AppInit.htmlReady(function () {
-        ModuleManager.loadModule("arduino.panel.console","default")
+        ModuleManager.loadModule(_prefsPrefix, "default")
         .done(function(module){
             _consoleView = module;
             if( !!_prefs.get("show") ) {
@@ -208,7 +231,7 @@ define(function (require, exports, module) {
         });
     });
 
-    CommandManager.register(Strings.CMD_CONSOLE, Commands.TOOLS_CONSOLE_TOOGLE, toggle);
+    CommandManager.register(Strings.CMD_CONSOLE, Commands.TOOGLE_CONSOLE, toggle);
 
     // Define public API
     exports.show = show;
@@ -220,6 +243,8 @@ define(function (require, exports, module) {
     exports.logError = logError;
     exports.logSuccess = logSuccess;
     exports.logWarning = logWarning;
+    exports.setMaxRow = setMaxRow;
+    exports.getMaxRow = getMaxRow;
     //exports.loadModule = loadModule;
     //exports.registerModule = registerModule;
     exports.LOG_TYPE = LOG_TYPE;
