@@ -653,5 +653,29 @@ define({
     "COLLAPSE_ALL"                  : "Collapse All",
     "EXPAND_ALL"                    : "Expand All",
     "COLLAPSE_CURRENT"              : "Collapse Current",
-    "EXPAND_CURRENT"                : "Expand Current"
+    "EXPAND_CURRENT"                : "Expand Current",
+
+    //Arduino Stuff
+
+    "CMD_SHOW_PREFS_DLG"            : "Preferences",
+
+    "DLG_PREFS_TITLE"                     : "Arduino Studio Preferences",
+    //"DLG_PREFS_LBL_SKETCHBOOK_PATH"       : "Sketchbook path",
+    "DLG_PREFS_LBL_VERBOSE_OUTPUT"        : "Show verbose output during",
+    "DLG_PREFS_LBL_BUILD"                 : "Building",
+    "DLG_PREFS_LBL_UPLOAD"                : "Upload",
+
+    "DLG_PREFS_LBL_EDITOR_FONT_SIZE"      : "Editor font size (px)",
+    "DLG_PREFS_LBL_EDITOR_LINE_NUM"       : "Show line numbers",
+
+    //"DLG_PREFS_LBL_CHECK_UPDATE"          : "Check for update at startup",
+    //"DLG_PREFS_BTN_SKETCHBOOK_BROWSE"     : "Browse"
+
+    "DLG_PREFS_LBL_SM_MAX_ROWS"             : "Maximum rows number in Serial Monitor log",
+    "DLG_PREFS_LBL_SM_AUTO_CONNECT"         : "Auto connect Serial Monitor on panel show",
+    "DLG_PREFS_LBL_SM_AUTO_RECONNECT"       : "Auto Re-Connect Serial Monitor",
+
+    "DLG_PREFS_LBL_CONSOLE_MAX_ROWS"        : "Maximum rows number in Arduino Console log",
+
+
 });

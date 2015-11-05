@@ -33,6 +33,7 @@ define(function (require, exports, module) {
     require("arduino/SerialPort");
     require("arduino/Discovery");
     require("text!htmlContent/console-panel.html");
+    require("arduino/PreferenceDialog");
 
     var AppInit = require("utils/AppInit"),
         CommandManager = require("command/CommandManager"),

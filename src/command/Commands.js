@@ -172,6 +172,9 @@ define(function (require, exports, module) {
 
     // TOOLS
     exports.TOOLS_CONSOLE_TOOGLE          = "tools.consoleToogle";       // Console.js       toggle();
+
+    // Arduino
+    exports.FILE_OPEN_ARDUINO_PREFERENCES       = "file.openArduinoPreferences";       // arduino/PreferencesDialog.js        _showDialog()
     
     // DEPRECATED: Working Set Commands
     DeprecationWarning.deprecateConstant(exports, "SORT_WORKINGSET_BY_ADDED",   "CMD_WORKINGSET_SORT_BY_ADDED");
