@@ -3,6 +3,8 @@
   "version": "0.0.1",
   "dependencies": {
     "async": "1.4.2",
-    "serialport": "1.7.4"
+    "serialport": "1.7.4",
+    "lodash": "3.10.1",
+    "mdns": "2.2.10"
   }
 }

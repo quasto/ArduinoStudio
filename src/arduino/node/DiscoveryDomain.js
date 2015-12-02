@@ -29,7 +29,8 @@
 (function () {
     "use strict";
 
-    var DiscoverySerial = require("./DiscoverySerial");
+    var DiscoverySerial = require("./DiscoverySerial"),
+        DiscoveryNetwork = require("./DiscoveryNetwork");
 
     var domainName = "arduino-discovery-domain",
         dManager;
@@ -61,11 +62,19 @@
      * @param  {Function} callback [description]
      */
     function networkDiscover(callback){
-        //TODO
-        var networkPortList = [];
-        callback(null, networkPortList);
+        DiscoveryNetwork.list(function(err, list){
+            callback(err, list);
+        });
+        //var networkPortList = [];
+        //callback(null, networkPortList);
     }
 
+
+    function startNetworkBrowsing(callback){
+        console.log("net");
+        DiscoveryNetwork.start();
+        callback(null, true);
+    }
 
     function init(domainManager){
         if(!domainManager.hasDomain( domainName )){
@@ -87,6 +96,14 @@
             networkDiscover,
             true,
             "Get all the 'netowrked' boards"
+        );
+
+        dManager.registerCommand(
+            domainName,
+            "startNetworkBrowsing",
+            startNetworkBrowsing,
+            true,
+            "start network browsing"
         );
     }
 

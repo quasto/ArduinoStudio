@@ -66,7 +66,7 @@ define(function (require, exports, module) {
      */
     var getNetworkPorts = function(){
         var $deferred = $.Deferred();
-        discoveryDomain.exec("netoworkDiscover")
+        discoveryDomain.exec("networkDiscover")
             .done( function(list){
                 $deferred.resolve(list);
             })
@@ -76,7 +76,20 @@ define(function (require, exports, module) {
         return $deferred.promise();
     };
 
+    var startNetBrowse = function(){
+        var $deferred = $.Deferred();
+        discoveryDomain.exec("startNetworkBrowsing")
+            .done( function(status){
+                $deferred.resolve(status);
+            })
+            .fail(function(error) {
+                $deferred.reject(error);
+            });
+        return $deferred.promise();
+    }
+
     // Define public API
     exports.getSerialPorts = getSerialPorts;
     exports.getNetworkPorts = getNetworkPorts;
+    exports.startNetBrowse = startNetBrowse;
 });
