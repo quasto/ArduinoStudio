@@ -54,7 +54,7 @@ define(function (require, exports, module) {
      * Gets the User Home directory absolute path
      * return {FileSystemEntry} resolve the user home directory or reject with the error string
      */
-    var getUserHome = function(){
+    var getUserHomeDir = function(){
         var $deferred = $.Deferred();
         osDomain.exec("getUserHome")
             .done( function(path){
@@ -70,9 +70,26 @@ define(function (require, exports, module) {
      * Gets the User Documents directory absolute path
      * @param {FileSystemEntry} resolve the user documents directory or reject with the error string
      */
-    var getUserDocuments = function(){
+    var getUserDocumentsDir = function(){
         var $deferred = $.Deferred();
         osDomain.exec("getUserDocuments")
+            .done( function(path){
+                $deferred.resolve(FileSystem.getDirectoryForPath(path));
+            })
+            .fail(function(error) {
+                $deferred.reject(error);
+            });
+        return $deferred.promise();
+    };
+
+
+    /**
+     * Gets the Arduino User Libraries directory absolute path
+     * @param {FileSystemEntry} resolve the Arduino User Libraries directory or reject with the error string
+     */
+    var getUserArduinoLibrariesDir = function(){
+        var $deferred = $.Deferred();
+        osDomain.exec("getUserArduinoHomeLibraries", _prefs.get("home") || "")
             .done( function(path){
                 $deferred.resolve(FileSystem.getDirectoryForPath(path));
             })
@@ -86,7 +103,7 @@ define(function (require, exports, module) {
      * Gets the Arduino Home directory absolute path
      * @param {FileSystemEntry} resolve the Arduino Home directory or reject with the error string
      */
-    var getUserArduinoHome = function(){
+    var getArduinoHomeDir = function(){
         var $deferred = $.Deferred();
         osDomain.exec("getUserArduinoHome", _prefs.get("home") || "")
             .done( function(path){
@@ -98,25 +115,26 @@ define(function (require, exports, module) {
         return $deferred.promise();
     };
 
+
     /**
-     * Gets the Arduino User Libraries directory absolute path
-     * @param {FileSystemEntry} resolve the Arduino User Libraries directory or reject with the error string
+     * Gets the Arduino Default Libraries directory absolute path
+     * @param {FileSystemEntry} resolve the Arduino Default Libraries directory or reject with the error string
      */
-    var getUserArduinoHomeLibraries = function(){
+    var getArduinoHomeLibrariesDir = function(){
         var $deferred = $.Deferred();
-        osDomain.exec("getUserArduinoHomeLibraries", _prefs.get("home") || "")
-            .done( function(path){
-                $deferred.resolve(FileSystem.getDirectoryForPath(path));
-            })
-            .fail(function(error) {
-                $deferred.reject(error);
-            });
+        var bracketsDirPath = FileUtils.getNativeBracketsDirectoryPath(),
+            libsPathStr = bracketsDirPath.substr(0, bracketsDirPath.lastIndexOf("/")) + "/libraries";
+
+        $deferred.resolve(FileSystem.getDirectoryForPath(libsPathStr));
+
         return $deferred.promise();
     };
 
     // Define public API
-    exports.getUserHomeDir = getUserHome;
-    exports.getUserDocumentsDir = getUserDocuments;
-    exports.getUserArduinoHomeDir = getUserArduinoHome;
-    exports.getUserArduinoHomeLibrariesDir = getUserArduinoHomeLibraries;
+    exports.getUserHomeDir = getUserHomeDir;
+    exports.getUserDocumentsDir = getUserDocumentsDir;
+    exports.getUserArduinoLibrariesDir = getUserArduinoLibrariesDir;
+    exports.getArduinoHomeDir = getArduinoHomeDir;
+    exports.getArduinoHomeLibrariesDir = getArduinoHomeLibrariesDir;
+
 });

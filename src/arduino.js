@@ -32,6 +32,7 @@ define(function (require, exports, module) {
     require("arduino/ConsoleView");
     require("arduino/SerialPort");
     require("arduino/Discovery");
+    require("arduino/Os");
     require("text!htmlContent/console-panel.html");
 
     var AppInit = require("utils/AppInit"),
