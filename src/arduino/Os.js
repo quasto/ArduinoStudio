@@ -40,15 +40,11 @@ define(function (require, exports, module) {
     var domainPath = FileUtils.getNativeBracketsDirectoryPath() + "/" + FileUtils.getNativeModuleDirectoryPath(module) + "/node/OsDomain";
     var osDomain = new NodeDomain("arduino-os-domain", domainPath);
 
-    var _prefsPrefix = "arduino.pref";
+    var _prefsPrefix = "arduino.prefs";
     /**
      * @type {PrefixedPreferencesSystem} _prefs
-     * @private
      */
     var _prefs = PreferencesManager.getExtensionPrefs(_prefsPrefix);
-
-    /** @type {ConsoleView} The console view. Initialized in htmlReady() */
-    var _consoleView = null;
 
     /**
      * Gets the User Home directory absolute path

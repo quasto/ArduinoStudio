@@ -141,24 +141,24 @@ define(function (require, exports, module) {
         /*
          * Navigate menu
          */
-        //menu = Menus.addMenu(Strings.NAVIGATE_MENU, Menus.AppMenuBar.NAVIGATE_MENU);
-        //menu.addMenuItem(Commands.NAVIGATE_QUICK_OPEN);
-        //menu.addMenuItem(Commands.NAVIGATE_GOTO_LINE);
-        //menu.addMenuItem(Commands.NAVIGATE_GOTO_DEFINITION);
-        //menu.addMenuItem(Commands.NAVIGATE_JUMPTO_DEFINITION);
-        //menu.addMenuItem(Commands.NAVIGATE_GOTO_FIRST_PROBLEM);
-        //menu.addMenuDivider();
-        //menu.addMenuItem(Commands.NAVIGATE_NEXT_DOC);
-        //menu.addMenuItem(Commands.NAVIGATE_PREV_DOC);
-        //menu.addMenuDivider();
-        //menu.addMenuItem(Commands.NAVIGATE_SHOW_IN_FILE_TREE);
-        //menu.addMenuDivider();
-        //menu.addMenuItem(Commands.TOGGLE_QUICK_EDIT);
-        //menu.addMenuItem(Commands.QUICK_EDIT_PREV_MATCH);
-        //menu.addMenuItem(Commands.QUICK_EDIT_NEXT_MATCH);
-        //menu.addMenuItem(Commands.CSS_QUICK_EDIT_NEW_RULE);
-        //menu.addMenuDivider();
-        //menu.addMenuItem(Commands.TOGGLE_QUICK_DOCS);
+        menu = Menus.addMenu(Strings.NAVIGATE_MENU, Menus.AppMenuBar.NAVIGATE_MENU);
+        menu.addMenuItem(Commands.NAVIGATE_QUICK_OPEN);
+        menu.addMenuItem(Commands.NAVIGATE_GOTO_LINE);
+        menu.addMenuItem(Commands.NAVIGATE_GOTO_DEFINITION);
+        menu.addMenuItem(Commands.NAVIGATE_JUMPTO_DEFINITION);
+        menu.addMenuItem(Commands.NAVIGATE_GOTO_FIRST_PROBLEM);
+        menu.addMenuDivider();
+        menu.addMenuItem(Commands.NAVIGATE_NEXT_DOC);
+        menu.addMenuItem(Commands.NAVIGATE_PREV_DOC);
+        menu.addMenuDivider();
+        menu.addMenuItem(Commands.NAVIGATE_SHOW_IN_FILE_TREE);
+        menu.addMenuDivider();
+        menu.addMenuItem(Commands.TOGGLE_QUICK_EDIT);
+        menu.addMenuItem(Commands.QUICK_EDIT_PREV_MATCH);
+        menu.addMenuItem(Commands.QUICK_EDIT_NEXT_MATCH);
+        menu.addMenuItem(Commands.CSS_QUICK_EDIT_NEW_RULE);
+        menu.addMenuDivider();
+        menu.addMenuItem(Commands.TOGGLE_QUICK_DOCS);
         
         /*
          * Help menu

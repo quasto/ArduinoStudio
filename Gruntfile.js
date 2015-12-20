@@ -49,6 +49,15 @@ module.exports = function (grunt) {
                     {
                         'dist/index.html': 'src/.index.html'
                     },
+                    /* arduino stuff */
+                    {
+                        expand: true,
+                        dest: 'dist/',
+                        cwd: './',
+                        src: [
+                            'libraries/**'
+                        ]
+                    },
                     /* static files */
                     {
                         expand: true,

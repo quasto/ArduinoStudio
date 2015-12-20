@@ -1108,7 +1108,11 @@ define(function (require, exports, module) {
     // Currently, SVG uses XML mode so it has generic XML syntax highlighting. This can
     // be removed when SVG gets its own CodeMirror mode with SVG syntax highlighting.
     CodeMirror.defineMIME("image/svg+xml", "xml");
-    
+
+
+    //Define arduino MIME type
+    CodeMirror.defineMIME("text/x-arduino","arduino");
+
     // Load the default languages
     _defaultLanguagesJSON = JSON.parse(_defaultLanguagesJSON);
     _ready = Async.doInParallel(Object.keys(_defaultLanguagesJSON), function (key) {
@@ -1128,12 +1132,12 @@ define(function (require, exports, module) {
         _setLanguageForMode("html", html);
         
         // Similarly, the php mode uses clike internally for the PHP parts
-        var php = getLanguage("php");
-        php._setLanguageForMode("clike", php);
+//        var php = getLanguage("php");
+//        php._setLanguageForMode("clike", php);
 
         // Similar hack to the above for dealing with SCSS/CSS.
-        var scss = getLanguage("scss");
-        scss._setLanguageForMode("css", scss);
+//        var scss = getLanguage("scss");
+//        scss._setLanguageForMode("css", scss);
         
         // The fallback language for unknown modes and file extensions
         _fallbackLanguage = getLanguage("unknown");
